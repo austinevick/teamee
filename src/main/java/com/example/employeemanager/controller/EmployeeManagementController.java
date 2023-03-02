@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("api/v1/employee")
-public class EmployeeController {
+@RequestMapping("management/api/v1/employee")
+public class EmployeeManagementController {
     private final EmployeeService service;
 
-    public EmployeeController(EmployeeService service) {
+    public EmployeeManagementController(EmployeeService service) {
         this.service = service;
     }
 
@@ -26,16 +26,10 @@ public class EmployeeController {
         return new ResponseEntity<>(employees, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable("id") long id) {
-        Employee employee = service.findEmployeeById(id);
-        return new ResponseEntity<>(employee, HttpStatus.OK);
-    }
-
     @PostMapping()
-    public ResponseEntity<Employee> addEmployee(@Valid @RequestBody Employee employee) {
-            Employee newEmployee = service.addEmployee(employee);
-            return new ResponseEntity<>(newEmployee, HttpStatus.CREATED);
+    public ResponseEntity<Employee> registerNewEmployee(@Valid @RequestBody Employee employee) {
+        Employee newEmployee = service.addEmployee(employee);
+        return new ResponseEntity<>(newEmployee, HttpStatus.CREATED);
     }
 
     @PutMapping()
@@ -51,5 +45,4 @@ public class EmployeeController {
         response.put("User deleted",true);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
 }
